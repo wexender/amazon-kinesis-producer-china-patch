@@ -4,9 +4,12 @@ Patch for https://github.com/awslabs/amazon-kinesis-producer so it can work with
 
 ### Why?
 
-This minor patch is intended to fix the "Even you setup customEndpoint and/or region correctly in KinesisProducerConfiguration your KPL CloudWatch Metrics still cannot be sent to the correct service endpoint becuase I dont't care about China regions." bug.
+This minor patch is intended to fix the "Even you setup customEndpoint and/or region correctly in KinesisProducerConfiguration your KPL CloudWatch Metrics still cannot be sent to the correct service endpoint becuase I don't care about China regions." bug.
 
-ERROR Example:
+a. If you setup "region" to cn-north-1, the endpoint is incorrect without ".cn" trailing the DNS name.
+b. If you setup customEndpoint, kinesis works but cloudwatch metrics will be sent to kinesis service endpoint.
+
+ERROR Example(b):
 
 [2016-07-19 12:45:28.685895] [0x00007fff78f27300] [info] [metrics_manager.h:148] Uploading metrics to kinesis.cn-north-1.amazonaws.com.cn:443
 [2016-07-19 12:46:29.223858] [0x00007fff78f27300] [error] [metrics_manager.cc:190] Metrics upload failed: 
@@ -15,9 +18,9 @@ ERROR Example:
 
 1. Replace /aws/metrics/metrics_manager.h with the one provided in this patch.
 
-2. Compile and Install follows the README.md from https://github.com/awslabs/amazon-kinesis-producer
+2. Follow the README.md from https://github.com/awslabs/amazon-kinesis-producer to compile and install.
 
-3. This fix works with China regions (currently Beijing) only if you set customEndpoint property in KinesisProducerConfiguration. Setting region property along is not enough.
+3. This fix works with China regions (currently Beijing) only if you set both customEndpoint and region properties correctly in KinesisProducerConfiguration.
 
 e.g:
 	KinesisProducerConfiguration config = new KinesisProducerConfiguration()
