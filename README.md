@@ -25,7 +25,7 @@ ERROR Example(b):
 
 1. Replace /aws/metrics/metrics_manager.h with the one provided in this patch.
 
-2. Follow the README.md in https://github.com/awslabs/amazon-kinesis-producer to compile and install.
+2. Follow the README.md in https://github.com/awslabs/amazon-kinesis-producer to compile and install. After the final step, by ignoring testing errors you might need to package binaries under java/amazon-kinesis-producer/target/classes into a jar file manully, for example by using jar -cvf. 
 
 3. In your application, set BOTH customEndpoint and region properties correctly in KinesisProducerConfiguration.
 
